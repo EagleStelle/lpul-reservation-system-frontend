@@ -24,7 +24,11 @@ if exist ".env" (
 REM Backend API the frontend talks to. NEVER touch the backend itself.
 if not defined BACKEND_IP set "BACKEND_IP=127.0.0.1"
 if not defined PORT set "PORT=4000"
-set "BACKEND_URL=http://%BACKEND_IP%"
+if defined BACKEND_PORT (
+  set "BACKEND_URL=http://%BACKEND_IP%:%BACKEND_PORT%"
+) else (
+  set "BACKEND_URL=http://%BACKEND_IP%"
+)
 
 set "MODE=%~1"
 if "%MODE%"=="" goto menu

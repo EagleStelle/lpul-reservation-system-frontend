@@ -1,0 +1,63 @@
+<div class="relative flex min-h-dvh w-full items-center justify-center overflow-hidden bg-slate-50 p-4 sm:p-6">
+  <div class="absolute inset-0 bg-slate-200 bg-cover bg-center" style="background-image: url('/background.webp')"
+    aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-white/70" aria-hidden="true"></div>
+
+  <div class="relative z-10 grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl md:grid-cols-2">
+    <div class="hidden bg-slate-200 md:block">
+      <img src="/lpu-building.webp" alt="LPU Laguna campus" class="h-full w-full object-cover" />
+    </div>
+
+    <div class="relative flex flex-col justify-center gap-7 px-7 py-12 sm:px-10 md:py-14">
+      <img src="/logo.svg" alt="" aria-hidden="true"
+        class="pointer-events-none absolute inset-0 m-auto h-64 w-64 object-contain opacity-[0.06] grayscale" />
+
+      <header class="relative">
+        <h1 class="text-center text-2xl font-bold leading-tight text-black sm:text-3xl">
+          LPU - Laguna<br />Reservation System
+        </h1>
+      </header>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="relative flex flex-col gap-5" novalidate>
+        <div class="flex flex-col gap-1.5">
+          <label uiLabel for="username" class="sr-only">Username</label>
+          <input uiInput id="username" type="text" autocomplete="username" placeholder="Username"
+            formControlName="username" />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label uiLabel for="password" class="sr-only">Password</label>
+          <div class="relative">
+            <input uiInput id="password" [type]="showPassword() ? 'text' : 'password'" autocomplete="current-password"
+              placeholder="Password" formControlName="password" class="pr-10" />
+            <button type="button" (click)="showPassword.set(!showPassword())"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="showPassword()"
+              class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 transition-colors duration-200 hover:text-secondary focus-visible:text-primary focus-visible:outline-none">
+              <ui-icon [name]="showPassword() ? 'visibility_off' : 'visibility'" class="text-xl" />
+            </button>
+          </div>
+        </div>
+
+        @if (error()) {
+        <p class="text-sm font-medium text-red-600">{{ error() }}</p>
+        }
+
+        <div class="flex items-center justify-between gap-4">
+          <label uiLabel class="flex items-center gap-2">
+            <input type="checkbox" uiCheckbox formControlName="remember" />
+            <span>Remember me</span>
+          </label>
+
+          <a href="#" class="text-sm font-semibold text-secondary transition-colors duration-200 hover:text-primary">
+            Forgot Password
+          </a>
+        </div>
+
+        <button uiButton type="submit" class="w-full" [disabled]="loading()">
+          {{ loading() ? 'Signing in...' : 'Login' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
