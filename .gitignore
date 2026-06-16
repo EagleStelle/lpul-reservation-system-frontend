@@ -46,3 +46,21 @@ libpeerconnection.log
 testem.log
 frontend/typings/
 __screenshots__/
+
+# Backend - Eclipse workspace metadata (never commit)
+backend/.metadata/
+**/.metadata/
+
+# Backend - Maven build output
+backend/**/target/
+**/target/
+
+# Backend - Eclipse project files
+**/.classpath
+**/.project
+**/.settings/
+*.class
+
+# Backend - logs / runtime
+*.log
+hs_err_pid*
