@@ -3,10 +3,15 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Va
 import { Router, RouterLink } from '@angular/router';
 
 import { SideNav } from '../../../shared/layout/side-nav/side-nav';
-import { UiButton, UiInput } from '../../../shared/ui';
+import { UiButton, UiIcon, UiInput } from '../../../shared/ui';
 import { UsersService } from './users.service';
 
-const ROLES = ['Nexus Admin', 'Facilities Admin', 'EO Admin'] as const;
+const ROLES = [
+  { label: 'Nexus Admin', value: 'Nexus Admin' },
+  { label: 'Facilities Admin', value: 'Facilities Admin' },
+  { label: 'EO Admin', value: 'EO Admin' },
+  { label: 'Super Admin', value: 'SUPERADMIN' },
+] as const;
 
 function passwordsMatch(group: AbstractControl): ValidationErrors | null {
   const pw = group.get('password')?.value;
@@ -16,7 +21,7 @@ function passwordsMatch(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-add-user',
-  imports: [ReactiveFormsModule, RouterLink, SideNav, UiButton, UiInput],
+  imports: [ReactiveFormsModule, RouterLink, SideNav, UiButton, UiIcon, UiInput],
   templateUrl: './add-user.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -28,11 +33,14 @@ export class AddUser {
   protected readonly roles = ROLES;
   protected readonly saving = signal(false);
   protected readonly error = signal<string | null>(null);
+  protected readonly showPassword = signal(false);
+  protected readonly showConfirm = signal(false);
 
   protected readonly form = this.fb.nonNullable.group(
     {
       fullname: ['', [Validators.required]],
       role: ['', [Validators.required]],
+      employeeId: ['', [Validators.required]],
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
@@ -60,7 +68,7 @@ export class AddUser {
         fullname: v.fullname,
         role: v.role,
         email: v.email,
-        employeeId: '',
+        employeeId: v.employeeId,
         passwordHash: v.password,
         status: 'ACTIVE',
       })

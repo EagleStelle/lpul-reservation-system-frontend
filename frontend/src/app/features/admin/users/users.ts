@@ -64,7 +64,7 @@ export class Users {
     this.api.remove(u.employeeId).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.users.update((rows) => rows.filter((r) => r.id !== u.id));
+          this.users.update((rows) => rows.filter((r) => r.employeeId !== u.employeeId));
         } else {
           this.error.set(res?.message ?? 'Failed to delete user');
         }

@@ -1,5 +1,4 @@
 export interface UserRow {
-  id: number;
   username: string;
   fullname: string;
   role: string;
