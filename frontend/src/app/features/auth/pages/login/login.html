@@ -1,5 +1,5 @@
 <div
-  class="relative flex min-h-dvh w-full items-center justify-center overflow-hidden bg-gray-500 p-4 sm:p-6"
+  class="relative flex min-h-dvh w-full items-center justify-center overflow-hidden bg-gray-500 p-2 sm:p-6"
 >
   <div
     class="absolute inset-0 bg-cover bg-center opacity-30"
@@ -14,10 +14,14 @@
       <img src="/lpu-building.webp" alt="LPU Laguna campus" class="h-full w-full object-cover" />
     </div>
 
-    <div class="relative flex flex-col justify-center gap-8 px-6 py-10 sm:px-10 md:py-14">
-      <header class="relative flex items-center gap-4">
-        <img src="/logo.svg" alt="LPU Laguna" class="h-20 w-20 shrink-0 object-contain" />
-        <h1 class="whitespace-nowrap text-2xl font-black leading-tight text-gray-950 sm:text-3xl">
+    <div class="relative flex flex-col justify-center gap-6 px-5 py-8 sm:gap-8 sm:px-10 sm:py-10 md:py-14">
+      <header class="relative flex items-center gap-3 sm:gap-4">
+        <img
+          src="/logo.svg"
+          alt="LPU Laguna"
+          class="h-14 w-14 shrink-0 object-contain sm:h-20 sm:w-20"
+        />
+        <h1 class="text-xl font-black leading-tight text-gray-950 sm:whitespace-nowrap sm:text-3xl">
           LPU - Laguna<br />Reservation System
         </h1>
       </header>
@@ -25,7 +29,7 @@
       <form
         [formGroup]="form"
         (ngSubmit)="submit()"
-        class="relative flex flex-col gap-5"
+        class="relative flex flex-col gap-4 sm:gap-5"
         novalidate
       >
         <div class="flex flex-col gap-1.5">
@@ -84,7 +88,7 @@
           </a>
         </div>
 
-        <button uiButton type="submit" class="w-full py-3" [disabled]="loading()">
+        <button uiButton type="submit" class="w-full py-2.5 sm:py-3" [disabled]="loading()">
           {{ loading() ? 'Signing in...' : 'Login' }}
         </button>
       </form>
