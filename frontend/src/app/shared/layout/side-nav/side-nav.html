@@ -25,7 +25,7 @@
     <img src="/logo.svg" alt="LPU Laguna" class="h-14 w-14 object-contain" />
     <div class="min-w-0">
       <p class="truncate text-sm font-black uppercase tracking-wide">LPU Laguna</p>
-      <p class="text-xs text-white/60">Reservations</p>
+      <p class="text-xs text-white/60">Reservation System</p>
     </div>
   </div>
 
@@ -35,17 +35,12 @@
     @for (item of nav; track item.label) {
       <a
         [routerLink]="item.link"
-        routerLinkActive="bg-secondary text-white"
+        routerLinkActive="bg-secondary text-white shadow-lg"
         #rla="routerLinkActive"
-        class="group flex min-w-fit cursor-pointer items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200 lg:gap-3"
-        [class.text-white/70]="!rla.isActive"
-        [class.shadow-lg]="rla.isActive"
+        class="flex min-w-fit cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-white/80 transition-colors duration-150"
         [class.hover:bg-white/10]="!rla.isActive"
       >
-        <ui-icon
-          [name]="item.icon"
-          class="text-xl transition-transform duration-200 group-hover:-translate-y-0.5"
-        />
+        <ui-icon [name]="item.icon" class="text-xl" />
         <span class="hidden sm:inline">{{ item.label }}</span>
       </a>
     }
