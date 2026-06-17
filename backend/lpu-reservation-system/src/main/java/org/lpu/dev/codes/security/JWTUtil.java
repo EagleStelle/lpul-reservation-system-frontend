@@ -25,7 +25,7 @@ public class JWTUtil {
                 .setSubject(username)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
+                .setExpiration(new Date(System.currentTimeMillis() + 7200000)) // 2 hours
                 .signWith(key)
                 .compact();
     }

@@ -9,6 +9,7 @@ import org.lpu.dev.codes.model.apiresponse.PopulateUsersResponse;
 import org.lpu.dev.codes.model.data.Users;
 import org.lpu.dev.codes.model.dto.DeleteUserRequest;
 import org.lpu.dev.codes.model.dto.PopulateUserList;
+import org.lpu.dev.codes.model.dto.UpdateUserRequest;
 import org.lpu.dev.codes.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -262,6 +263,80 @@ public class SuperAdminUserService {
 
 	        response.setSuccess(false);
 	        response.setMessage("Failed to update account status");
+
+	        return response;
+	    }
+	}
+	
+	@Transactional
+	public AccountStatementResponse updateUser(
+	        UpdateUserRequest request) {
+
+	    AccountStatementResponse response =
+	            new AccountStatementResponse();
+
+	    try {
+
+	        Users user =
+	                userRepository.findByEmployeeId(
+	                        request.getOldEmployeeId());
+
+	        if (user == null) {
+
+	            response.setSuccess(false);
+	            response.setMessage("User not found");
+
+	            return response;
+	        }
+
+	        // Check duplicate employee ID
+	        if (!request.getOldEmployeeId()
+	                .equalsIgnoreCase(request.getEmployeeId())) {
+
+	            Users existing =
+	                    userRepository.findByEmployeeId(
+	                            request.getEmployeeId());
+
+	            if (existing != null) {
+
+	                response.setSuccess(false);
+	                response.setMessage(
+	                        "Employee ID already exists");
+
+	                return response;
+	            }
+	        }
+
+	        user.setEmployeeId(
+	                request.getEmployeeId().trim());
+
+	        user.setFullname(
+	                request.getFullname().trim());
+
+	        user.setEmail(
+	                request.getEmail().trim().toLowerCase());
+
+	        user.setRole(
+	                request.getRole());
+
+	        userRepository.save(user);
+
+	        response.setSuccess(true);
+	        response.setMessage(
+	                "Account updated successfully");
+
+	        return response;
+
+	    } catch (Exception e) {
+
+	        logger.error(
+	                "Failed updating user {}",
+	                request.getOldEmployeeId(),
+	                e);
+
+	        response.setSuccess(false);
+	        response.setMessage(
+	                "Failed to update account");
 
 	        return response;
 	    }

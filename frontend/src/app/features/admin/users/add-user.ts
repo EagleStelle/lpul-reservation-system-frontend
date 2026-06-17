@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { SideNav } from '../../../shared/layout/side-nav/side-nav';
@@ -7,9 +13,9 @@ import { UiButton, UiIcon, UiInput } from '../../../shared/ui';
 import { UsersService } from './users.service';
 
 const ROLES = [
-  { label: 'Nexus Admin', value: 'Nexus Admin' },
-  { label: 'Facilities Admin', value: 'Facilities Admin' },
-  { label: 'EO Admin', value: 'EO Admin' },
+  { label: 'Nexus Admin', value: 'NEXUSADMIN' },
+  { label: 'Facilities Admin', value: 'FACILITIESADMIN' },
+  { label: 'EO Admin', value: 'EOADMIN' },
   { label: 'Super Admin', value: 'SUPERADMIN' },
 ] as const;
 
@@ -87,5 +93,9 @@ export class AddUser {
         },
       });
   }
-  
+
+  protected selectedRoleLabel(): string {
+    const selected = this.form.controls.role.value;
+    return this.roles.find((role) => role.value === selected)?.label ?? 'Not selected';
+  }
 }

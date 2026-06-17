@@ -8,10 +8,10 @@ import { Directive } from '@angular/core';
   selector: 'input[uiInput]',
   host: {
     class:
-      'w-full rounded-md border bg-white px-3.5 py-2.5 text-sm ' +
-      'border-gray-500 text-gray-900 placeholder:text-gray-500 ' +
-      'transition-colors duration-200 ease-out ' +
-      'hover:border-secondary focus:border-primary focus:outline-none',
+      'w-full rounded-lg border bg-white/90 px-3.5 py-2.5 text-sm shadow-sm ' +
+      'border-gray-200 text-gray-900 placeholder:text-gray-400 ' +
+      'transition-all duration-200 ease-out ' +
+      'hover:border-secondary/70 focus:border-primary focus:bg-white focus:outline-none focus:ring-4 focus:ring-primary/10',
   },
 })
 export class UiInput {}

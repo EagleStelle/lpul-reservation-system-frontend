@@ -5,10 +5,10 @@ import { Directive } from '@angular/core';
   selector: 'button[uiButton], a[uiButton]',
   host: {
     class:
-      'inline-flex items-center justify-center gap-2 rounded-md ' +
-      'bg-primary px-4 py-2.5 text-sm font-semibold text-white ' +
-      'cursor-pointer select-none transition-colors duration-200 ease-out ' +
-      'hover:bg-secondary ' +
+      'inline-flex items-center justify-center gap-2 rounded-lg ' +
+      'bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/20 ' +
+      'cursor-pointer select-none transition-all duration-200 ease-out ' +
+      'hover:-translate-y-0.5 hover:bg-secondary hover:shadow-xl hover:shadow-secondary/25 active:translate-y-0 ' +
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 ' +
       'disabled:pointer-events-none disabled:opacity-50',
   },
