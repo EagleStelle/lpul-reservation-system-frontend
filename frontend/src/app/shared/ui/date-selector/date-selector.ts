@@ -59,6 +59,9 @@ function getYearRangeStart(year: number): number {
   selector: 'ui-date-selector',
   imports: [BrnButtonImports, BrnPopoverImports, UiIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'block sm:inline-block',
+  },
   template: `
     <brn-popover #datePopover="brnPopover" sideOffset="6" align="start">
       <button
@@ -66,7 +69,7 @@ function getYearRangeStart(year: number): number {
         brnPopoverTrigger
         type="button"
         (click)="syncPickerYear()"
-        class="flex h-9 cursor-pointer items-center gap-1.5 rounded-lg bg-white px-2.5 text-sm font-bold leading-none text-gray-600 elevated-sm transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-secondary hover:text-white hover:ring-transparent active:scale-[0.97] sm:px-4"
+        class="flex h-9 w-full cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-white px-2.5 text-sm font-bold leading-none text-gray-600 elevated-sm transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-secondary hover:text-white hover:ring-transparent active:scale-[0.97] sm:w-auto sm:justify-center sm:px-4"
       >
         <ui-icon name="calendar_today" class="text-sm" />
         <span>{{ displayValue() }}</span>
@@ -75,7 +78,7 @@ function getYearRangeStart(year: number): number {
 
       <ng-template brnPopoverContent>
         <div
-          class="z-50 w-72 rounded-xl border border-gray-200 bg-white p-3 text-gray-900 shadow-lg"
+          class="z-50 w-72 max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white p-3 text-gray-900 shadow-lg"
         >
           <div class="flex items-center justify-between gap-2">
             <button

@@ -1,13 +1,13 @@
 <app-admin-shell>
-  <section class="grid shrink-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <section class="grid shrink-0 grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
       @for (s of stats; track s.label) {
-        <div class="surface rounded-xl p-4">
-          <div class="flex items-start justify-between">
-            <div class="flex flex-col gap-1.5">
-              <span class="text-sm font-medium text-gray-400">{{ s.label }}</span>
-              <span class="text-3xl font-extrabold" [class]="s.valueColor">{{ s.value }}</span>
+        <div class="surface rounded-xl p-3 sm:p-4">
+          <div class="flex items-start justify-between gap-2">
+            <div class="flex min-w-0 flex-col gap-1.5">
+              <span class="truncate text-xs font-medium text-gray-400 sm:text-sm">{{ s.label }}</span>
+              <span class="text-2xl font-extrabold sm:text-3xl" [class]="s.valueColor">{{ s.value }}</span>
               <span
-                class="flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold"
+                class="flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold sm:text-xs"
                 [class.bg-green-100]="s.trend === 'up'"
                 [class.text-green-700]="s.trend === 'up'"
                 [class.bg-red-100]="s.trend === 'down'"
@@ -20,16 +20,16 @@
                 {{ s.delta }}
               </span>
             </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg" [class]="s.iconBg">
-              <ui-icon [name]="s.icon" class="text-2xl" [class]="s.iconFg" />
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg sm:h-12 sm:w-12" [class]="s.iconBg">
+              <ui-icon [name]="s.icon" class="text-xl sm:text-2xl" [class]="s.iconFg" />
             </div>
           </div>
         </div>
       }
     </section>
 
-    <section class="surface flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl p-4 sm:p-6">
-      <div class="mb-6 flex shrink-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <section class="surface flex min-h-0 flex-none flex-col overflow-visible rounded-xl p-3 sm:rounded-2xl sm:p-6 lg:flex-1 lg:overflow-hidden">
+      <div class="mb-4 flex shrink-0 flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between">
         <ui-date-selector [value]="activeDate()" (valueChange)="selectDate($event)" />
         <ui-segmented
           [options]="categories"
@@ -38,27 +38,38 @@
         />
       </div>
 
-      <div class="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1fr)_14rem]">
+      <div class="grid min-h-[34rem] flex-1 grid-rows-[minmax(24rem,1fr)_minmax(9rem,auto)] gap-3 md:min-h-[36rem] lg:min-h-0 lg:grid-cols-[minmax(0,1fr)_14rem] lg:grid-rows-none">
         <div class="flex min-h-0 overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
           <div class="min-h-0 flex-1 overflow-x-auto">
-            <div class="grid h-full min-h-0 min-w-[44rem] grid-rows-[auto_minmax(0,1fr)]">
+            <div class="grid h-full min-h-0 min-w-full grid-rows-[auto_minmax(0,1fr)] md:min-w-[44rem]">
               <div class="grid grid-cols-7 bg-primary text-center text-sm font-bold text-white">
                 @for (weekday of weekdays; track weekday) {
-                  <div class="border-r border-white/35 px-2 py-2 last:border-r-0">
+                  <div class="border-r border-white/35 px-1 py-2 last:border-r-0 sm:px-2">
                     {{ weekday }}
                   </div>
                 }
               </div>
 
-              <div class="grid h-full min-h-0 grid-cols-7 grid-rows-6 text-center text-xs text-gray-900">
+              <div
+                class="grid h-full min-h-0 grid-cols-7 text-center text-[11px] text-gray-900 sm:text-xs"
+                [style.grid-template-rows]="calendarDateRows()"
+              >
                 @for (day of calendarDays(); track day.id) {
                   <div
-                    class="flex min-h-0 flex-col border-r border-b border-white p-2 last:border-r-0"
+                    class="flex min-h-0 flex-col border-r border-b border-white p-1.5 last:border-r-0 sm:p-2"
                     [class.bg-gray-100]="day.rowTone === 'muted'"
                     [class.bg-gray-50]="day.rowTone === 'soft'"
                   >
                     @if (day.day !== null) {
-                      <span class="shrink-0">{{ day.day }}</span>
+                      <span
+                        class="mx-auto flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1 font-semibold sm:h-6 sm:min-w-6"
+                        [class.bg-primary]="day.isToday"
+                        [class.text-white]="day.isToday"
+                        [class.shadow-sm]="day.isToday"
+                        [attr.aria-label]="day.isToday ? 'Today' : null"
+                      >
+                        {{ day.day }}
+                      </span>
                       @if (day.reservations.length) {
                         <ul class="mt-2 space-y-1 overflow-hidden text-left">
                           @for (reservation of day.reservations; track reservation.id) {
@@ -76,7 +87,7 @@
           </div>
         </div>
 
-        <aside class="flex min-h-0 flex-col overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
+        <aside class="flex min-h-0 max-h-44 flex-col overflow-hidden rounded-lg ring-1 ring-inset ring-black/5 lg:max-h-none">
           <div class="shrink-0 bg-primary px-4 py-2 text-center text-sm font-bold text-white">
             Upcoming Events
           </div>

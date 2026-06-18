@@ -6,9 +6,12 @@ import { BrnToggleGroupImports } from '@spartan-ng/brain/toggle-group';
   selector: 'ui-segmented',
   imports: [BrnToggleGroupImports],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'block max-w-full overflow-x-auto sm:inline-block',
+  },
   template: `
     <brn-toggle-group
-      class="elevated-sm flex items-center gap-1 rounded-lg bg-gray-100 p-0.5"
+      class="elevated-sm flex min-w-full items-center gap-1 rounded-lg bg-gray-100 p-0.5 sm:min-w-0"
       [value]="value()"
       (valueChange)="value.set($any($event))"
     >

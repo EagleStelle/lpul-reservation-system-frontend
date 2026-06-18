@@ -22,7 +22,8 @@ interface CalendarReservation {
 interface CalendarDay {
   id: string;
   day: number | null;
-  rowTone: 'muted' | 'soft' | 'plain';
+  isToday: boolean;
+  rowTone: 'muted' | 'soft';
   reservations: CalendarReservation[];
 }
 
@@ -35,7 +36,8 @@ interface UpcomingEvent {
 
 type Category = 'All' | 'Van' | 'FLT' | 'Gym';
 
-const CALENDAR_CELL_COUNT = 42;
+const DAYS_PER_WEEK = 7;
+const MIN_CALENDAR_ROWS = 5;
 const DEFAULT_YEAR_MONTH = '2026-06';
 
 function parseYearMonth(value: string): { year: number; month: number } {
@@ -52,19 +54,28 @@ function parseYearMonth(value: string): { year: number; month: number } {
 
 function createCalendarDays(value: string): CalendarDay[] {
   const { year, month } = parseYearMonth(value);
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth();
+  const todayDay = today.getDate();
   const firstWeekday = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const rowCount = Math.max(
+    MIN_CALENDAR_ROWS,
+    Math.ceil((firstWeekday + daysInMonth) / DAYS_PER_WEEK),
+  );
+  const cellCount = rowCount * DAYS_PER_WEEK;
 
-  return Array.from({ length: CALENDAR_CELL_COUNT }, (_, index) => {
-    const row = Math.floor(index / 7);
+  return Array.from({ length: cellCount }, (_, index) => {
+    const row = Math.floor(index / DAYS_PER_WEEK);
     const dayOffset = index - firstWeekday;
     const day = dayOffset >= 0 && dayOffset < daysInMonth ? dayOffset + 1 : null;
-    const rowTone: CalendarDay['rowTone'] =
-      row === 3 ? 'plain' : row === 1 || row === 4 ? 'soft' : 'muted';
+    const rowTone: CalendarDay['rowTone'] = row % 2 === 0 ? 'muted' : 'soft';
 
     return {
       id: `${value}-${index}-${day ?? 'empty'}`,
       day,
+      isToday: day === todayDay && month === todayMonth && year === todayYear,
       rowTone,
       reservations: [],
     };
@@ -138,6 +149,9 @@ export class Dashboard {
   protected readonly weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   protected readonly calendarDays = computed(() => createCalendarDays(this.activeDate()));
+  protected readonly calendarDateRows = computed(
+    () => `repeat(${this.calendarDays().length / DAYS_PER_WEEK}, minmax(0, 1fr))`,
+  );
 
   protected readonly upcomingEvents = signal<UpcomingEvent[]>([]);
 }
