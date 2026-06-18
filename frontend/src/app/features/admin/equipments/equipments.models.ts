@@ -1,25 +1,25 @@
 export interface EquipmentRow {
-  name: string;
-  service: string;
+  id: number;
+  name: string | null;
   status: string;
+  facilityId: number;
+  facilityName: string;
 }
 
 export interface PopulateEquipmentsResponse {
   success: boolean;
   message: string;
-  equipments: EquipmentRow[];
+  equipment: EquipmentRow[];
 }
 
 export interface CreateEquipmentRequest {
   name: string;
-  service: string;
   status: string;
 }
 
 export interface UpdateEquipmentRequest {
-  oldName: string;
+  id: number;
   name: string;
-  service: string;
   status: string;
 }
 

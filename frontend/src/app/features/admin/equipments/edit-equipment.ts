@@ -23,7 +23,7 @@ export class EditEquipment {
   protected readonly saving = signal(false);
   protected readonly ready = signal(false);
   protected readonly error = signal<string | null>(null);
-  protected readonly oldName = signal('');
+  protected readonly id = signal(0);
   protected readonly currentStatus = signal<string | null>(null);
 
   protected readonly statuses = computed(() => {
@@ -38,24 +38,23 @@ export class EditEquipment {
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
-    service: ['', [Validators.required]],
     status: ['ACTIVE', [Validators.required]],
   });
 
   constructor() {
-    const name = this.route.snapshot.paramMap.get('name') ?? '';
-    this.oldName.set(name);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id.set(id);
 
-    if (!name) {
+    if (!id) {
       this.loading.set(false);
-      this.error.set('Missing equipment name');
+      this.error.set('Missing equipment id');
       return;
     }
 
-    this.load(name);
+    this.load(id);
   }
 
-  private load(name: string): void {
+  private load(id: number): void {
     this.loading.set(true);
     this.error.set(null);
 
@@ -68,9 +67,7 @@ export class EditEquipment {
           return;
         }
 
-        const equipment = (res.equipments ?? []).find(
-          (row) => row.name.toLowerCase() === name.toLowerCase(),
-        );
+        const equipment = (res.equipment ?? []).find((row) => row.id === id);
 
         if (!equipment) {
           this.error.set('Equipment not found');
@@ -79,8 +76,7 @@ export class EditEquipment {
 
         this.currentStatus.set(equipment.status);
         this.form.setValue({
-          name: equipment.name,
-          service: equipment.service,
+          name: equipment.name ?? '',
           status: equipment.status,
         });
         this.ready.set(true);
@@ -110,9 +106,8 @@ export class EditEquipment {
 
     this.api
       .update({
-        oldName: this.oldName(),
+        id: this.id(),
         name: v.name,
-        service: v.service,
         status: v.status,
       })
       .subscribe({

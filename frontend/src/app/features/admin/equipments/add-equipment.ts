@@ -24,7 +24,6 @@ export class AddEquipment {
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
-    service: ['', [Validators.required]],
     status: ['ACTIVE', [Validators.required]],
   });
 
@@ -42,7 +41,6 @@ export class AddEquipment {
     this.api
       .create({
         name: v.name,
-        service: v.service,
         status: v.status,
       })
       .subscribe({

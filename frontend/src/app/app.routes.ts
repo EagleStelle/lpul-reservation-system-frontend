@@ -37,7 +37,7 @@ export const routes: Routes = [
       import('./features/admin/equipments/add-equipment').then((m) => m.AddEquipment),
   },
   {
-    path: 'equipments/:name/edit',
+    path: 'equipments/:id/edit',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/admin/equipments/edit-equipment').then((m) => m.EditEquipment),

@@ -30,8 +30,8 @@ export class Equipments {
     if (!q) return rows;
 
     return rows.filter((equipment) =>
-      [equipment.name, equipment.service, equipment.status].some((field) =>
-        field.toLowerCase().includes(q),
+      [equipment.name, equipment.facilityName, equipment.status].some((field) =>
+        field?.toLowerCase().includes(q),
       ),
     );
   });
@@ -49,7 +49,7 @@ export class Equipments {
         this.loading.set(false);
 
         if (res?.success) {
-          this.equipments.set(res.equipments ?? []);
+          this.equipments.set(res.equipment ?? []);
         } else {
           this.error.set(res?.message ?? 'Failed to load equipments');
         }
@@ -70,12 +70,12 @@ export class Equipments {
       return;
     }
 
-    this.api.remove(equipment.name).subscribe({
+    this.api.remove(equipment.id).subscribe({
       next: (res) => {
         this.showResponse(res?.success ?? false, res?.message ?? 'Unknown response');
 
         if (res?.success) {
-          this.equipments.update((rows) => rows.filter((row) => row.name !== equipment.name));
+          this.equipments.update((rows) => rows.filter((row) => row.id !== equipment.id));
         }
       },
       error: (err) => {
@@ -95,14 +95,14 @@ export class Equipments {
       return;
     }
 
-    this.api.toggleStatus(equipment.name).subscribe({
+    this.api.toggleStatus(equipment.id).subscribe({
       next: (res) => {
         this.showResponse(res?.success ?? false, res?.message ?? 'Unknown response');
 
         if (res?.success) {
           this.equipments.update((rows) =>
             rows.map((row) =>
-              row.name === equipment.name
+              row.id === equipment.id
                 ? {
                     ...row,
                     status: this.isActive(row.status) ? 'INACTIVE' : 'ACTIVE',

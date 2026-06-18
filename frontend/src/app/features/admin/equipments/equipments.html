@@ -13,7 +13,6 @@
         <thead class="sticky top-0 z-10">
           <tr class="bg-primary text-xs font-bold uppercase tracking-wide text-white">
             <th class="px-5 py-4">Name</th>
-            <th class="px-4 py-3">Service</th>
             <th class="px-4 py-3 text-center">Status</th>
             <th class="px-4 py-3 text-center">Actions</th>
           </tr>
@@ -21,27 +20,26 @@
         <tbody>
           @if (loading()) {
             <tr>
-              <td colspan="4" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
+              <td colspan="3" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
                 Loading equipments...
               </td>
             </tr>
           } @else if (error()) {
             <tr>
-              <td colspan="4" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
+              <td colspan="3" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
             </tr>
           } @else if (filtered().length === 0) {
             <tr>
-              <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
+              <td colspan="3" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
                 No equipments found.
               </td>
             </tr>
           } @else {
-            @for (equipment of filtered(); track equipment.name) {
+            @for (equipment of filtered(); track equipment.id) {
               <tr
                 class="border-b border-gray-100 odd:bg-white even:bg-gray-50/70 hover:bg-secondary/5 dark:border-zinc-800 dark:odd:bg-zinc-900 dark:even:bg-zinc-800/60 dark:hover:bg-secondary/15"
               >
-                <td class="px-5 py-4 text-black dark:text-zinc-100">{{ equipment.name }}</td>
-                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ equipment.service }}</td>
+                <td class="px-5 py-4 text-black dark:text-zinc-100">{{ equipment.name ?? '—' }}</td>
                 <td class="px-4 py-3 text-center">
                   <ui-status-badge [status]="equipment.status" />
                 </td>
@@ -49,7 +47,7 @@
                   <div class="flex items-center justify-center gap-2 text-gray-500 dark:text-zinc-400">
                     <a
                       title="Edit"
-                      [routerLink]="['/equipments', equipment.name, 'edit']"
+                      [routerLink]="['/equipments', equipment.id, 'edit']"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
                       <ui-icon name="edit_square" class="text-lg" />
@@ -82,5 +80,10 @@
     </div>
   </section>
 
-  <ui-toast [show]="showToast()" [success]="toastSuccess()" [message]="toastMessage()" />
+  <ui-toast
+    class="contents"
+    [show]="showToast()"
+    [success]="toastSuccess()"
+    [message]="toastMessage()"
+  />
 </app-admin-shell>

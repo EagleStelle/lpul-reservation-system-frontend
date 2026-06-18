@@ -18,5 +18,9 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 export class UiStatusBadge {
   readonly status = input('');
 
-  protected readonly isActive = computed(() => this.status().toUpperCase() === 'ACTIVE');
+  private static readonly ACTIVE = new Set(['ACTIVE', 'AVAILABLE']);
+
+  protected readonly isActive = computed(() =>
+    UiStatusBadge.ACTIVE.has(this.status().toUpperCase()),
+  );
 }

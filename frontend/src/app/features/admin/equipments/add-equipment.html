@@ -44,24 +44,6 @@
         </div>
 
         <div class="flex flex-col gap-1.5">
-          <label
-            for="add-equipment-service"
-            class="text-sm font-bold text-gray-800 dark:text-zinc-200"
-          >
-            Service
-          </label>
-          <input
-            uiInput
-            id="add-equipment-service"
-            name="addEquipmentService"
-            type="text"
-            formControlName="service"
-            autocomplete="off"
-            placeholder="Audio Visual"
-          />
-        </div>
-
-        <div class="flex flex-col gap-1.5">
           <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">Status</label>
           <ui-select formControlName="status" placeholder="Select status" [options]="statuses" />
         </div>
