@@ -35,187 +35,63 @@
           [value]="activeCategory()"
           (valueChange)="selectCategory($any($event))"
         />
-        <div class="flex items-center gap-2">
-          <ui-date-selector [value]="activeYear()" />
-          <ui-segmented
-            [options]="ranges"
-            [value]="activeRange()"
-            (valueChange)="selectRange($any($event))"
-          />
-        </div>
+        <ui-date-selector [value]="activeYear()" />
       </div>
 
-      <div class="grid min-h-65 flex-1 gap-3 lg:grid-cols-[minmax(0,1fr)_14rem]">
-        <div class="overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
-          <div class="overflow-x-auto">
-            <div class="min-w-[44rem]">
+      <div class="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1fr)_14rem]">
+        <div class="flex min-h-0 overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
+          <div class="min-h-0 flex-1 overflow-x-auto">
+            <div class="grid h-full min-h-[26rem] min-w-[44rem] grid-rows-[auto_repeat(5,minmax(0,1fr))]">
               <div class="grid grid-cols-7 bg-primary text-center text-xs font-bold text-white">
-                <div class="border-r border-white/35 px-2 py-2">Sun</div>
-                <div class="border-r border-white/35 px-2 py-2">Mon</div>
-                <div class="border-r border-white/35 px-2 py-2">Tue</div>
-                <div class="border-r border-white/35 px-2 py-2">Wed</div>
-                <div class="border-r border-white/35 px-2 py-2">Thu</div>
-                <div class="border-r border-white/35 px-2 py-2">Fri</div>
-                <div class="px-2 py-2">Sat</div>
+                @for (weekday of weekdays; track weekday) {
+                  <div class="border-r border-white/35 px-2 py-2 last:border-r-0">
+                    {{ weekday }}
+                  </div>
+                }
               </div>
 
-              <div class="grid grid-cols-7 text-center text-xs text-gray-900">
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5"></div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>1</div>
-                  <div class="mx-auto mt-2 h-4 w-21 rounded-full bg-orange-500"></div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>2</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>3</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>4</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>5</div>
-                </div>
-                <div class="min-h-14 border-b border-white bg-gray-100 p-1.5">
-                  <div>6</div>
-                </div>
-
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>7</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>8</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>9</div>
-                  <div class="mx-auto mt-2 h-4 w-21 rounded-full bg-green-600"></div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>10</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>11</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-50 p-1.5">
-                  <div>12</div>
-                </div>
-                <div class="min-h-14 border-b border-white bg-gray-50 p-1.5">
-                  <div>13</div>
-                  <div class="mx-auto mt-2 h-4 w-21 rounded-full bg-red-600"></div>
-                </div>
-
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>14</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>15</div>
-                  <div class="mx-auto mt-2 h-4 w-21 rounded-full bg-green-600"></div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>16</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>17</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>18</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white bg-gray-100 p-1.5">
-                  <div>19</div>
-                </div>
-                <div class="min-h-14 border-b border-white bg-gray-100 p-1.5">
-                  <div>20</div>
-                </div>
-
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>21</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>22</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>23</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>24</div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>25</div>
-                  <div class="mx-auto mt-2 h-4 w-21 rounded-full bg-red-600"></div>
-                </div>
-                <div class="min-h-14 border-r border-b border-white p-1.5">
-                  <div>26</div>
-                </div>
-                <div class="min-h-14 border-b border-white p-1.5">
-                  <div>27</div>
-                </div>
-
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5">
-                  <div>28</div>
-                </div>
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5">
-                  <div>29</div>
-                </div>
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5">
-                  <div>30</div>
-                </div>
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5">
-                  <div>31</div>
-                </div>
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5"></div>
-                <div class="min-h-14 border-r border-white bg-gray-100 p-1.5"></div>
-                <div class="min-h-14 bg-gray-100 p-1.5"></div>
+              <div class="grid min-h-0 grid-cols-7 grid-rows-5 text-center text-xs text-gray-900">
+                @for (day of calendarDays(); track day.id) {
+                  <div
+                    class="flex min-h-0 flex-col border-r border-b border-white p-2 last:border-r-0"
+                    [class.bg-gray-100]="day.rowTone === 'muted'"
+                    [class.bg-gray-50]="day.rowTone === 'soft'"
+                  >
+                    @if (day.day !== null) {
+                      <span class="shrink-0">{{ day.day }}</span>
+                      @if (day.reservations.length) {
+                        <ul class="mt-2 space-y-1 overflow-hidden text-left">
+                          @for (reservation of day.reservations; track reservation.id) {
+                            <li class="truncate border-l-2 border-primary/40 pl-1.5 text-[11px] font-medium text-primary">
+                              {{ reservation.title }}
+                            </li>
+                          }
+                        </ul>
+                      }
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>
         </div>
 
-        <aside class="overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
+        <aside class="flex min-h-0 flex-col overflow-hidden rounded-lg ring-1 ring-inset ring-black/5">
           <div class="bg-primary px-4 py-2 text-center text-xs font-bold text-white">
             Upcoming Events
           </div>
-          <div class="space-y-3 p-3">
-            <div class="flex items-center gap-2">
-              <div class="h-12 w-12 shrink-0 rounded-full bg-orange-500"></div>
-              <div class="min-w-0 flex-1 space-y-1.5">
-                <div class="h-2 w-24 rounded-full bg-gray-300"></div>
-                <div class="h-1.5 rounded-full bg-gray-200"></div>
-                <div class="h-1.5 w-5/6 rounded-full bg-gray-200"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="h-12 w-12 shrink-0 rounded-full bg-green-600"></div>
-              <div class="min-w-0 flex-1 space-y-1.5">
-                <div class="h-2 w-24 rounded-full bg-gray-300"></div>
-                <div class="h-1.5 rounded-full bg-gray-200"></div>
-                <div class="h-1.5 w-5/6 rounded-full bg-gray-200"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="h-12 w-12 shrink-0 rounded-full bg-red-600"></div>
-              <div class="min-w-0 flex-1 space-y-1.5">
-                <div class="h-2 w-24 rounded-full bg-gray-300"></div>
-                <div class="h-1.5 rounded-full bg-gray-200"></div>
-                <div class="h-1.5 w-5/6 rounded-full bg-gray-200"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="h-12 w-12 shrink-0 rounded-full bg-green-600"></div>
-              <div class="min-w-0 flex-1 space-y-1.5">
-                <div class="h-2 w-24 rounded-full bg-gray-300"></div>
-                <div class="h-1.5 rounded-full bg-gray-200"></div>
-                <div class="h-1.5 w-5/6 rounded-full bg-gray-200"></div>
-              </div>
-            </div>
-            <div class="flex items-center gap-2">
-              <div class="h-12 w-12 shrink-0 rounded-full bg-red-600"></div>
-              <div class="min-w-0 flex-1 space-y-1.5">
-                <div class="h-2 w-24 rounded-full bg-gray-300"></div>
-                <div class="h-1.5 rounded-full bg-gray-200"></div>
-                <div class="h-1.5 w-5/6 rounded-full bg-gray-200"></div>
-              </div>
-            </div>
+          <div class="min-h-0 flex-1 overflow-y-auto p-3">
+            @for (event of upcomingEvents(); track event.id) {
+              <article class="border-b border-gray-100 pb-3 last:border-b-0 last:pb-0">
+                <h3 class="truncate text-xs font-semibold text-gray-900">{{ event.title }}</h3>
+                <time class="mt-1 block text-[11px] font-medium text-primary">{{ event.date }}</time>
+                @if (event.description) {
+                  <p class="mt-1 line-clamp-2 text-[11px] leading-snug text-gray-500">
+                    {{ event.description }}
+                  </p>
+                }
+              </article>
+            }
           </div>
         </aside>
       </div>
