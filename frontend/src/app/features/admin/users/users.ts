@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink } from '@angular/router';
 
 import { AdminShell } from '../../../shared/layout/admin-shell/admin-shell';
-import { UiButton, UiIcon, UiInputSearch } from '../../../shared/ui';
+import { UiButton, UiIcon, UiInputSearch, UiStatusBadge, UiToast } from '../../../shared/ui';
 import { UsersService } from './users.service';
 import { UserRow } from './users.models';
 
 @Component({
   selector: 'app-users',
-  imports: [RouterLink, AdminShell, UiButton, UiIcon, UiInputSearch],
+  imports: [RouterLink, AdminShell, UiButton, UiIcon, UiInputSearch, UiStatusBadge, UiToast],
   templateUrl: './users.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

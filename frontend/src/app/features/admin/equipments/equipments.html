@@ -1,22 +1,19 @@
 <app-admin-shell>
   <section class="animate-rise flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
     <ui-input-search class="flex-1" [value]="search()" (valueChange)="onSearch($event)" />
-    <a uiButton routerLink="/users/new" class="w-full sm:w-auto">
+    <a uiButton routerLink="/equipments/new" class="w-full sm:w-auto">
       <ui-icon name="add" [size]="20" />
-      <span>ADD USER</span>
+      <span>ADD EQUIPMENT</span>
     </a>
   </section>
 
   <section class="surface animate-rise flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl">
     <div class="min-h-0 flex-1 overflow-auto">
-      <table class="w-full min-w-215 border-collapse text-left text-sm">
+      <table class="w-full min-w-150 border-collapse text-left text-sm">
         <thead class="sticky top-0 z-10">
           <tr class="bg-primary text-xs font-bold uppercase tracking-wide text-white">
-            <th class="px-5 py-4">Employee ID</th>
-            <th class="px-4 py-3">Username</th>
-            <th class="px-4 py-3">Full Name</th>
-            <th class="px-4 py-3">Role</th>
-            <th class="px-4 py-3">Email</th>
+            <th class="px-5 py-4">Name</th>
+            <th class="px-4 py-3">Service</th>
             <th class="px-4 py-3 text-center">Status</th>
             <th class="px-4 py-3 text-center">Actions</th>
           </tr>
@@ -24,56 +21,53 @@
         <tbody>
           @if (loading()) {
             <tr>
-              <td colspan="7" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
-                Loading users...
+              <td colspan="4" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
+                Loading equipments...
               </td>
             </tr>
           } @else if (error()) {
             <tr>
-              <td colspan="7" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
+              <td colspan="4" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
             </tr>
           } @else if (filtered().length === 0) {
             <tr>
-              <td colspan="7" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
-                No users found.
+              <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
+                No equipments found.
               </td>
             </tr>
           } @else {
-            @for (u of filtered(); track u.employeeId) {
+            @for (equipment of filtered(); track equipment.name) {
               <tr
                 class="border-b border-gray-100 odd:bg-white even:bg-gray-50/70 hover:bg-secondary/5 dark:border-zinc-800 dark:odd:bg-zinc-900 dark:even:bg-zinc-800/60 dark:hover:bg-secondary/15"
               >
-                <td class="px-5 py-4 text-black dark:text-zinc-100">{{ u.employeeId }}</td>
-                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ u.username }}</td>
-                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ u.fullname }}</td>
-                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ u.role }}</td>
-                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ u.email }}</td>
+                <td class="px-5 py-4 text-black dark:text-zinc-100">{{ equipment.name }}</td>
+                <td class="px-4 py-3 text-black dark:text-zinc-100">{{ equipment.service }}</td>
                 <td class="px-4 py-3 text-center">
-                  <ui-status-badge [status]="u.status" />
+                  <ui-status-badge [status]="equipment.status" />
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex items-center justify-center gap-2 text-gray-500 dark:text-zinc-400">
                     <a
                       title="Edit"
-                      [routerLink]="['/users', u.employeeId, 'edit']"
+                      [routerLink]="['/equipments', equipment.name, 'edit']"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
                       <ui-icon name="edit_square" class="text-lg" />
                     </a>
                     <button
                       type="button"
-                      (click)="toggleStatus(u)"
+                      (click)="toggleStatus(equipment)"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
                       <ui-icon
-                        [name]="isActive(u.status) ? 'pause_circle' : 'play_circle'"
+                        [name]="isActive(equipment.status) ? 'pause_circle' : 'play_circle'"
                         class="text-lg"
                       />
                     </button>
                     <button
                       type="button"
                       title="Delete"
-                      (click)="remove(u)"
+                      (click)="remove(equipment)"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-red-600"
                     >
                       <ui-icon name="delete" class="text-lg" />

@@ -25,6 +25,24 @@ export const routes: Routes = [
     loadComponent: () => import('./features/admin/users/edit-user').then((m) => m.EditUser),
   },
   {
+    path: 'equipments',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/equipments/equipments').then((m) => m.Equipments),
+  },
+  {
+    path: 'equipments/new',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/equipments/add-equipment').then((m) => m.AddEquipment),
+  },
+  {
+    path: 'equipments/:name/edit',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/equipments/edit-equipment').then((m) => m.EditEquipment),
+  },
+  {
     path: '',
     loadChildren: () =>
       import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),

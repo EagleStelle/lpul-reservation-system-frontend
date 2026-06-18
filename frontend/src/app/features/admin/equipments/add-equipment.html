@@ -1,0 +1,80 @@
+<app-admin-shell>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="save()"
+    autocomplete="off"
+    class="surface animate-rise flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl"
+  >
+    <div class="mx-5 border-b border-primary/30 py-3.5 sm:mx-7">
+      <div class="flex items-center gap-3 text-primary dark:text-white">
+        <ui-icon name="inventory_2" class="text-2xl" />
+        <h2 class="text-xl font-black">ADD EQUIPMENT</h2>
+      </div>
+    </div>
+
+    @if (saving()) {
+      <div
+        class="mx-5 mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-semibold text-primary sm:mx-7"
+      >
+        Saving equipment...
+      </div>
+    } @else if (error()) {
+      <div
+        class="mx-5 mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 sm:mx-7"
+      >
+        {{ error() }}
+      </div>
+    }
+
+    <div class="flex-1 overflow-y-auto p-5 lg:p-7">
+      <div class="grid content-start gap-5 sm:grid-cols-2">
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label for="add-equipment-name" class="text-sm font-bold text-gray-800 dark:text-zinc-200">
+            Name
+          </label>
+          <input
+            uiInput
+            id="add-equipment-name"
+            name="addEquipmentName"
+            type="text"
+            formControlName="name"
+            autocomplete="off"
+            placeholder="LCD Projector"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label
+            for="add-equipment-service"
+            class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+          >
+            Service
+          </label>
+          <input
+            uiInput
+            id="add-equipment-service"
+            name="addEquipmentService"
+            type="text"
+            formControlName="service"
+            autocomplete="off"
+            placeholder="Audio Visual"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">Status</label>
+          <ui-select formControlName="status" placeholder="Select status" [options]="statuses" />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mx-5 mt-auto flex flex-col-reverse gap-3 border-t border-primary/30 py-3 sm:mx-7 sm:flex-row sm:justify-end"
+    >
+      <a uiButton variant="secondary" routerLink="/equipments"> CANCEL </a>
+      <button uiButton type="submit" [disabled]="saving()">
+        <span>SAVE</span>
+      </button>
+    </div>
+  </form>
+</app-admin-shell>
