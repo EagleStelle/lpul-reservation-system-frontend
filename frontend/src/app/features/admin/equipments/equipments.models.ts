@@ -14,12 +14,14 @@ export interface PopulateEquipmentsResponse {
 
 export interface CreateEquipmentRequest {
   name: string;
+  facilityId: number;
   status: string;
 }
 
 export interface UpdateEquipmentRequest {
   id: number;
   name: string;
+  facilityId: number;
   status: string;
 }
 

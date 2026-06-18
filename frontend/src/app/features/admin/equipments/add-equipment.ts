@@ -3,7 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AdminShell } from '../../../shared/layout/admin-shell/admin-shell';
-import { UiButton, UiIcon, UiInput, UiSelect } from '../../../shared/ui';
+import { UiButton, UiIcon, UiInput, UiSelect, UiSelectOption } from '../../../shared/ui';
+import { toFacilityOptions } from './equipment-facilities';
 import { EQUIPMENT_STATUS_OPTIONS } from './equipment-status';
 import { EquipmentsService } from './equipments.service';
 
@@ -19,13 +20,25 @@ export class AddEquipment {
   private readonly router = inject(Router);
 
   protected readonly statuses = EQUIPMENT_STATUS_OPTIONS;
+  protected readonly facilities = signal<UiSelectOption[]>([]);
   protected readonly saving = signal(false);
   protected readonly error = signal<string | null>(null);
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
-    status: ['ACTIVE', [Validators.required]],
+    facilityId: ['', [Validators.required]],
+    status: ['AVAILABLE', [Validators.required]],
   });
+
+  constructor() {
+    this.api.list().subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.facilities.set(toFacilityOptions(res.equipment ?? []));
+        }
+      },
+    });
+  }
 
   protected save(): void {
     if (this.form.invalid) {
@@ -41,6 +54,7 @@ export class AddEquipment {
     this.api
       .create({
         name: v.name,
+        facilityId: Number(v.facilityId),
         status: v.status,
       })
       .subscribe({

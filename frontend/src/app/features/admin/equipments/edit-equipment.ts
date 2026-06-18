@@ -3,7 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AdminShell } from '../../../shared/layout/admin-shell/admin-shell';
-import { UiButton, UiIcon, UiInput, UiSelect } from '../../../shared/ui';
+import { UiButton, UiIcon, UiInput, UiSelect, UiSelectOption } from '../../../shared/ui';
+import { toFacilityOptions } from './equipment-facilities';
 import { EQUIPMENT_STATUS_OPTIONS } from './equipment-status';
 import { EquipmentsService } from './equipments.service';
 
@@ -25,6 +26,7 @@ export class EditEquipment {
   protected readonly error = signal<string | null>(null);
   protected readonly id = signal(0);
   protected readonly currentStatus = signal<string | null>(null);
+  protected readonly facilities = signal<UiSelectOption[]>([]);
 
   protected readonly statuses = computed(() => {
     const current = this.currentStatus();
@@ -38,7 +40,8 @@ export class EditEquipment {
 
   protected readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required]],
-    status: ['ACTIVE', [Validators.required]],
+    facilityId: ['', [Validators.required]],
+    status: ['AVAILABLE', [Validators.required]],
   });
 
   constructor() {
@@ -75,8 +78,10 @@ export class EditEquipment {
         }
 
         this.currentStatus.set(equipment.status);
+        this.facilities.set(toFacilityOptions(res.equipment ?? []));
         this.form.setValue({
           name: equipment.name ?? '',
+          facilityId: String(equipment.facilityId),
           status: equipment.status,
         });
         this.ready.set(true);
@@ -108,6 +113,7 @@ export class EditEquipment {
       .update({
         id: this.id(),
         name: v.name,
+        facilityId: Number(v.facilityId),
         status: v.status,
       })
       .subscribe({
