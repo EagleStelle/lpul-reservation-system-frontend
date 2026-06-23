@@ -38,6 +38,17 @@
         />
       </div>
 
+      <div class="mb-4 flex flex-wrap items-center gap-2 text-[11px] font-bold sm:text-xs">
+        @for (legend of eventLegends; track legend.label) {
+          <span
+            class="inline-flex items-center rounded border-l-4 px-2 py-1 leading-none"
+            [class]="legend.className"
+          >
+            {{ legend.label }}
+          </span>
+        }
+      </div>
+
       <div class="grid min-h-[34rem] flex-1 grid-rows-[minmax(24rem,auto)_minmax(9rem,auto)] gap-3 md:min-h-[36rem] lg:min-h-0 lg:grid-cols-[minmax(0,1fr)_14rem] lg:grid-rows-none">
         <div class="flex min-h-0 overflow-auto rounded-lg ring-1 ring-inset ring-black/5 dark:ring-white/10">
           <div class="min-h-0 flex-1 overflow-x-auto">
@@ -76,10 +87,11 @@
                         <ul class="mt-2 space-y-1 text-left">
                           @for (reservation of day.reservations; track reservation.id) {
                             <li
-                              class="min-w-0 rounded border-l-2 border-primary/50 bg-white/70 px-1.5 py-1 text-[11px] leading-tight text-gray-700 shadow-sm dark:bg-zinc-900/70 dark:text-zinc-200"
+                              class="min-w-0 rounded border-l-4 px-1.5 py-1 text-[11px] leading-tight shadow-sm"
+                              [class]="eventColorClass(reservation.category)"
                               [title]="reservation.time + ' - ' + reservation.title"
                             >
-                              <span class="block truncate font-bold text-primary">
+                              <span class="block truncate font-bold">
                                 {{ reservation.time }}
                               </span>
                               <span class="block truncate font-medium">
@@ -108,11 +120,14 @@
                   <h3 class="min-w-0 truncate text-xs font-semibold text-gray-900 dark:text-zinc-100">
                     {{ event.title }}
                   </h3>
-                  <span class="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+                  <span
+                    class="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold"
+                    [class]="eventBadgeClass(event.category)"
+                  >
                     {{ event.category }}
                   </span>
                 </div>
-                <time class="mt-1 block text-[11px] font-medium text-primary">
+                <time class="mt-1 block text-[11px] font-medium text-gray-500 dark:text-zinc-400">
                   {{ event.date }} - {{ event.time }}
                 </time>
                 @if (event.description) {
