@@ -43,7 +43,7 @@ export const routes: Routes = [
       import('./features/admin/equipments/edit-equipment').then((m) => m.EditEquipment),
   },
   {
-    path: '',
+    path: 'customer',
     loadChildren: () =>
       import('./features/customer/customer.routes').then((m) => m.CUSTOMER_ROUTES),
   },

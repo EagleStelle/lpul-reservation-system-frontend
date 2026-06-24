@@ -1,7 +1,7 @@
 import { computed, Directive, input } from '@angular/core';
 import { BrnButton } from '@spartan-ng/brain/button';
 
-export type UiButtonVariant = 'primary' | 'secondary';
+export type UiButtonVariant = 'primary' | 'secondary' | 'ghost';
 
 /** Shared layout/sizing so primary + secondary buttons line up at the same height. */
 const BASE =
@@ -12,9 +12,11 @@ const BASE =
   'disabled:pointer-events-none disabled:opacity-50';
 
 const VARIANTS: Record<UiButtonVariant, string> = {
-  primary: 'border-primary bg-primary text-white hover:border-secondary hover:bg-secondary',
+  primary: 'border-primary bg-primary text-white hover:border-secondary hover:bg-secondary hover:text-white',
   secondary:
-    'border-primary bg-white dark:bg-zinc-800 text-primary dark:text-zinc-100 hover:border-secondary hover:bg-secondary/10 dark:hover:bg-secondary/25',
+    'border-primary bg-white dark:bg-zinc-800 text-primary dark:text-zinc-100 hover:border-secondary hover:bg-secondary hover:text-white',
+  ghost:
+    'border-primary bg-transparent text-primary dark:text-zinc-100 hover:border-secondary hover:bg-secondary hover:text-white',
 };
 
 /** Button: `variant="primary"` (default) or `variant="secondary"`. Built on spartan/brain button. */

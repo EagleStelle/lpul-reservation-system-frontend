@@ -54,6 +54,7 @@
     letter-spacing: normal;
     white-space: nowrap;
     direction: ltr;
+    font-size: inherit;
     font-variation-settings:
       'FILL' 0,
       'wght' 400,

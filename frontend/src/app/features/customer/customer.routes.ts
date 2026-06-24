@@ -6,8 +6,8 @@ export const CUSTOMER_ROUTES: Routes = [
     loadComponent: () => import('./landing-page/landing-page').then((m) => m.LandingPage),
   },
   {
-    path: 'book/boardroom',
+    path: 'boardroom',
     loadComponent: () =>
-      import('./boardroom-reservation/boardroom-reservation').then((m) => m.BoardroomReservation),
+      import('./boardroom/boardroom').then((m) => m.BoardroomReservation),
   },
 ];
