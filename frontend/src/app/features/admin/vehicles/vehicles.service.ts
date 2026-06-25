@@ -18,7 +18,6 @@ type StatementBody = { success?: boolean | string; message?: string } | null;
 export class VehiclesService {
   private readonly http = inject(HttpClient);
   private readonly base = environment.apiUrl;
-  private readonly assetBase = environment.apiUrl.replace(/\/api\/?$/, '');
 
   list() {
     return this.http.get<PopulateVehiclesResponse>(`${this.base}/admin/vehicle`);
@@ -53,11 +52,8 @@ export class VehiclesService {
       return null;
     }
 
+    // Already a usable URL (absolute http, data:, blob:) — leave as-is.
     if (/^(data:image\/|blob:|https?:\/\/)/i.test(source)) {
-      return source;
-    }
-
-    if (source.startsWith('/')) {
       return source;
     }
 
@@ -67,18 +63,19 @@ export class VehiclesService {
       return `data:${mime};base64,${source}`;
     }
 
-    const path = source.replace(/^\/+/, '');
-    const assetBase = this.assetBase.replace(/\/+$/, '');
-    const assetOrigin = assetBase.match(/^https?:\/\/[^/]+/i)?.[0] ?? '';
-    const assetPath = assetBase
-      .replace(/^https?:\/\/[^/]+/i, '')
-      .replace(/^\/+|\/+$/g, '');
+    // Otherwise a backend-relative path (e.g. "uploads/foo.jpg"). Images are
+    // served straight off the backend host, no API context. Strip a leading
+    // context segment if the backend included one.
+    let path = source.replace(/^\/+/, '');
+    const ctx = environment.apiUrl.replace(/^\/+/, '').replace(/\/api\/?$/, '');
 
-    if (assetPath && path.toLowerCase().startsWith(`${assetPath.toLowerCase()}/`)) {
-      return `${assetOrigin}/${path}`;
+    if (ctx && path.toLowerCase().startsWith(`${ctx.toLowerCase()}/`)) {
+      path = path.slice(ctx.length + 1);
     }
 
-    return `${assetBase}/${path}`;
+    const origin = environment.backendUrl.replace(/\/+$/, '');
+
+    return origin ? `${origin}/${path}` : `/${path}`;
   }
 
   private async toCreateBody(payload: CreateVehicleRequest): Promise<CreateVehicleBody> {
