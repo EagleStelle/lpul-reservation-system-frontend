@@ -53,7 +53,7 @@ export class EditVehicle implements OnDestroy {
     brand: ['', [Validators.required]],
     plate_num: ['', [Validators.required]],
     capacity: [1, [Validators.required, Validators.min(1)]],
-    status: ['available', [Validators.required]],
+    status: ['AVAILABLE', [Validators.required]],
     vehicleDescription: ['', [Validators.required]],
     image: [null as File | null],
   });

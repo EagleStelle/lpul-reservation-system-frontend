@@ -24,9 +24,6 @@ export class VehiclesService {
   }
 
   create(payload: CreateVehicleRequest) {
-    // Backend's createvehicle consumes multipart/form-data, so send a FormData
-    // with the raw image File. Do NOT set Content-Type — the browser adds the
-    // multipart boundary automatically.
     return this.http
       .post<StatementBody>(`${this.base}/admin/createvehicle`, this.toCreateForm(payload), {
         observe: 'response',
