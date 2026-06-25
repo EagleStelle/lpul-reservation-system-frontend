@@ -92,7 +92,7 @@
                       [routerLink]="['/users', u.employeeId, 'edit']"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
-                      <ui-icon name="edit_square" class="text-lg" />
+                      <ui-icon name="edit_square" class="text-xl" />
                     </a>
                     <button
                       type="button"
@@ -101,7 +101,7 @@
                     >
                       <ui-icon
                         [name]="isActive(u.status) ? 'pause_circle' : 'play_circle'"
-                        class="text-lg"
+                        class="text-xl"
                       />
                     </button>
                     <button
@@ -110,7 +110,7 @@
                       (click)="remove(u)"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-red-600"
                     >
-                      <ui-icon name="delete" class="text-lg" />
+                      <ui-icon name="delete" class="text-xl" />
                     </button>
                   </div>
                 </td>

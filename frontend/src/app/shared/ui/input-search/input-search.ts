@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 
 import { UiInput } from '../input/input';
 import { UiIcon } from '../icon/icon';
@@ -12,12 +12,11 @@ import { UiIcon } from '../icon/icon';
   template: `
     <ui-icon
       name="search"
-      class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-lg text-current"
+      class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xl text-current"
     />
     <input
       uiInput
       type="search"
-      [placeholder]="placeholder()"
       [value]="value()"
       (input)="value.set($any($event.target).value)"
       class="pl-10! [&::-webkit-search-cancel-button]:appearance-none"
@@ -26,5 +25,4 @@ import { UiIcon } from '../icon/icon';
 })
 export class UiInputSearch {
   readonly value = model<string>('');
-  readonly placeholder = input<string>('Search...');
 }

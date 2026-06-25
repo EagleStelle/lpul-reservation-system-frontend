@@ -1,73 +1,67 @@
 <app-admin-shell>
   <section class="animate-rise flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
     <ui-input-search class="flex-1" [value]="search()" (valueChange)="onSearch($event)" />
-    <ui-segmented
-      [options]="serviceFilters"
-      [value]="activeService()"
-      (valueChange)="selectService($any($event))"
-    />
-    <a uiButton routerLink="/equipments/new" class="w-full sm:w-auto">
+    <a uiButton routerLink="/vehicles/new" class="w-full sm:w-auto">
       <ui-icon name="add" [size]="20" />
-      <span>ADD EQUIPMENT</span>
+      <span>ADD VEHICLE</span>
     </a>
   </section>
 
   <section class="surface animate-rise flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl">
     <div class="min-h-0 flex-1 overflow-auto">
-      <table class="w-full min-w-150 border-collapse text-left text-sm">
+      <table class="w-full min-w-[76rem] border-collapse text-left text-sm">
         <thead class="sticky top-0 z-10">
           <tr class="bg-primary text-xs font-bold uppercase tracking-wide text-white">
-           <th
-  class="px-5 py-4 cursor-pointer"
-  (click)="sortBy('name')"
->
-  Name
-</th>
-
-<th
-  class="px-4 py-3 cursor-pointer"
-  (click)="sortBy('facilityName')"
->
-  Service
-</th>
-
-<th
-  class="px-4 py-3 text-center cursor-pointer"
-  (click)="sortBy('status')"
->
-  Status
-</th>
+            <th class="cursor-pointer px-5 py-4" (click)="sortBy('plate_num')">Plate No.</th>
+            <th class="cursor-pointer px-4 py-3" (click)="sortBy('brand')">Brand</th>
+            <th class="cursor-pointer px-4 py-3" (click)="sortBy('facilityName')">Service</th>
+            <th class="cursor-pointer px-4 py-3 text-center" (click)="sortBy('capacity')">
+              Capacity
+            </th>
+            <th class="px-4 py-3">Description</th>
+            <th class="cursor-pointer px-4 py-3 text-center" (click)="sortBy('status')">Status</th>
             <th class="px-4 py-3 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           @if (loading()) {
             <tr>
-              <td colspan="4" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
-                Loading equipments...
+              <td colspan="7" class="px-4 py-10 text-center text-gray-500 dark:text-zinc-400">
+                Loading vehicles...
               </td>
             </tr>
           } @else if (error()) {
             <tr>
-              <td colspan="4" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
+              <td colspan="7" class="px-4 py-8 text-center text-red-600">{{ error() }}</td>
             </tr>
           } @else if (filtered().length === 0) {
             <tr>
-              <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
-                No equipments found.
+              <td colspan="7" class="px-4 py-8 text-center text-gray-500 dark:text-zinc-400">
+                No vehicles found.
               </td>
             </tr>
           } @else {
-            @for (equipment of filtered(); track equipment.id) {
+            @for (vehicle of filtered(); track vehicle.id) {
               <tr
                 class="border-b border-gray-100 odd:bg-white even:bg-gray-50/70 hover:bg-secondary/5 dark:border-zinc-800 dark:odd:bg-zinc-900 dark:even:bg-zinc-800/60 dark:hover:bg-secondary/15"
               >
-                <td class="px-5 py-4 text-black dark:text-zinc-100">{{ equipment.name ?? '—' }}</td>
+                <td class="px-5 py-4 font-semibold text-black dark:text-zinc-100">
+                  {{ vehicle.plate_num || 'N/A' }}
+                </td>
                 <td class="px-4 py-3 text-black dark:text-zinc-100">
-                  {{ equipment.facilityName ?? '—' }}
+                  {{ vehicle.brand || 'N/A' }}
+                </td>
+                <td class="px-4 py-3 text-black dark:text-zinc-100">
+                  {{ vehicle.facilityName || 'N/A' }}
+                </td>
+                <td class="px-4 py-3 text-center text-black dark:text-zinc-100">
+                  {{ vehicle.capacity || 'N/A' }}
+                </td>
+                <td class="max-w-72 truncate px-4 py-3 text-black dark:text-zinc-100">
+                  {{ vehicle.vehicleDescription || 'N/A' }}
                 </td>
                 <td class="px-4 py-3 text-center">
-                  <ui-status-badge [status]="equipment.status" />
+                  <ui-status-badge [status]="vehicle.status" />
                 </td>
                 <td class="px-4 py-3">
                   <div
@@ -75,25 +69,25 @@
                   >
                     <a
                       title="Edit"
-                      [routerLink]="['/equipments', equipment.id, 'edit']"
+                      [routerLink]="['/vehicles', vehicle.id, 'edit']"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
                       <ui-icon name="edit_square" class="text-xl" />
                     </a>
                     <button
                       type="button"
-                      (click)="toggleStatus(equipment)"
+                      (click)="toggleStatus(vehicle)"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-primary"
                     >
                       <ui-icon
-                        [name]="isActive(equipment.status) ? 'pause_circle' : 'play_circle'"
+                        [name]="isActive(vehicle.status) ? 'pause_circle' : 'play_circle'"
                         class="text-xl"
                       />
                     </button>
                     <button
                       type="button"
                       title="Delete"
-                      (click)="remove(equipment)"
+                      (click)="remove(vehicle)"
                       class="cursor-pointer rounded-lg p-1.5 hover:text-red-600"
                     >
                       <ui-icon name="delete" class="text-xl" />

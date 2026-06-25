@@ -1,0 +1,103 @@
+<app-admin-shell>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="save()"
+    autocomplete="off"
+    class="surface animate-rise flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl"
+  >
+    <div class="mx-5 border-b border-primary/30 py-3.5 sm:mx-7">
+      <div class="flex items-center gap-3 text-primary dark:text-white">
+        <ui-icon name="directions_car" class="text-2xl" />
+        <h2 class="text-xl font-black">ADD VEHICLE</h2>
+      </div>
+    </div>
+
+    <ui-form-feedback
+      [saving]="saving()"
+      savingText="Saving vehicle..."
+      [error]="error()"
+      (dismissed)="error.set(null)"
+    />
+
+    <div class="flex-1 overflow-y-auto p-5 lg:p-7">
+      <div class="grid content-start gap-5 sm:grid-cols-2">
+        <div class="flex flex-col gap-1.5">
+          <label for="add-vehicle-brand" class="text-sm font-bold text-gray-800 dark:text-zinc-200">
+            Brand
+          </label>
+          <input
+            uiInput
+            id="add-vehicle-brand"
+            name="addVehicleBrand"
+            type="text"
+            formControlName="brand"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="add-vehicle-plate" class="text-sm font-bold text-gray-800 dark:text-zinc-200">
+            Plate Number
+          </label>
+          <input
+            uiInput
+            id="add-vehicle-plate"
+            name="addVehiclePlate"
+            type="text"
+            formControlName="plate_num"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label
+            for="add-vehicle-capacity"
+            class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+          >
+            Capacity
+          </label>
+          <input
+            uiInput
+            id="add-vehicle-capacity"
+            name="addVehicleCapacity"
+            type="number"
+            min="1"
+            formControlName="capacity"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">Status</label>
+          <ui-select formControlName="status" placeholder="Select status" [options]="statuses" />
+        </div>
+
+        <div class="flex flex-col gap-1.5 sm:col-span-2">
+          <label
+            for="add-vehicle-description"
+            class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+          >
+            Description
+          </label>
+          <input
+            uiInput
+            id="add-vehicle-description"
+            name="addVehicleDescription"
+            type="text"
+            formControlName="vehicleDescription"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mx-5 mt-auto flex flex-col-reverse gap-3 border-t border-primary/30 py-3 sm:mx-7 sm:flex-row sm:justify-end"
+    >
+      <a uiButton variant="secondary" routerLink="/vehicles"> CANCEL </a>
+      <button uiButton type="submit" [disabled]="saving()">
+        <span>SAVE</span>
+      </button>
+    </div>
+  </form>
+</app-admin-shell>

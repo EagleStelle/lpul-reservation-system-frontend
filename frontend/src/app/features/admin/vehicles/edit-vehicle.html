@@ -8,7 +8,7 @@
     <div class="mx-5 border-b border-primary/30 py-3.5 sm:mx-7">
       <div class="flex items-center gap-3 text-primary dark:text-white">
         <ui-icon name="edit_square" class="text-2xl" />
-        <h2 class="text-xl font-black">UPDATE USER</h2>
+        <h2 class="text-xl font-black">UPDATE VEHICLE</h2>
       </div>
     </div>
 
@@ -22,83 +22,86 @@
     <div class="flex-1 overflow-y-auto p-5 lg:p-7">
       @if (loading()) {
         <div class="py-10 text-center text-sm text-gray-500 dark:text-zinc-400">
-          Loading user...
+          Loading vehicle...
         </div>
       } @else if (ready()) {
         <div class="grid content-start gap-5 sm:grid-cols-2">
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit-vehicle-brand"
+              class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+            >
+              Brand
+            </label>
+            <input
+              uiInput
+              id="edit-vehicle-brand"
+              name="editVehicleBrand"
+              type="text"
+              formControlName="brand"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit-vehicle-plate"
+              class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+            >
+              Plate Number
+            </label>
+            <input
+              uiInput
+              id="edit-vehicle-plate"
+              name="editVehiclePlate"
+              type="text"
+              formControlName="plate_num"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="edit-vehicle-capacity"
+              class="text-sm font-bold text-gray-800 dark:text-zinc-200"
+            >
+              Capacity
+            </label>
+            <input
+              uiInput
+              id="edit-vehicle-capacity"
+              name="editVehicleCapacity"
+              type="number"
+              min="1"
+              formControlName="capacity"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">Status</label>
+            <ui-select
+              formControlName="status"
+              placeholder="Select status"
+              [options]="statuses()"
+            />
+          </div>
+
           <div class="flex flex-col gap-1.5 sm:col-span-2">
             <label
-              for="edit-user-fullname"
+              for="edit-vehicle-description"
               class="text-sm font-bold text-gray-800 dark:text-zinc-200"
             >
-              Full Name
+              Description
             </label>
             <input
               uiInput
-              id="edit-user-fullname"
-              name="editUserFullname"
+              id="edit-vehicle-description"
+              name="editVehicleDescription"
               type="text"
-              formControlName="fullname"
+              formControlName="vehicleDescription"
               autocomplete="off"
             />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label
-              for="edit-user-employee-id"
-              class="text-sm font-bold text-gray-800 dark:text-zinc-200"
-            >
-              Employee ID
-            </label>
-            <input
-              uiInput
-              id="edit-user-employee-id"
-              name="editUserEmployeeId"
-              type="text"
-              formControlName="employeeId"
-              autocomplete="off"
-            />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label for="edit-user-email" class="text-sm font-bold text-gray-800 dark:text-zinc-200"
-              >Email</label
-            >
-            <input
-              uiInput
-              id="edit-user-email"
-              name="editUserEmail"
-              type="email"
-              formControlName="email"
-              autocomplete="off"
-            />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label
-              for="edit-user-username"
-              class="text-sm font-bold text-gray-800 dark:text-zinc-200"
-            >
-              Username
-            </label>
-            <input
-              uiInput
-              id="edit-user-username"
-              name="editUserUsername"
-              type="text"
-              formControlName="username"
-              autocomplete="off"
-            />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">Password</label>
-            <button uiButton type="button">RESET PASSWORD</button>
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label class="text-sm font-bold text-gray-800 dark:text-zinc-200">User Role</label>
-            <ui-select formControlName="role" placeholder="Select a role" [options]="roles()" />
           </div>
         </div>
       }
@@ -107,7 +110,7 @@
     <div
       class="mx-5 mt-auto flex flex-col-reverse gap-3 border-t border-primary/30 py-3 sm:mx-7 sm:flex-row sm:justify-end"
     >
-      <a uiButton variant="secondary" routerLink="/users"> CANCEL </a>
+      <a uiButton variant="secondary" routerLink="/vehicles"> CANCEL </a>
       <button uiButton type="submit" [disabled]="loading() || saving() || !ready()">
         <span>SAVE</span>
       </button>

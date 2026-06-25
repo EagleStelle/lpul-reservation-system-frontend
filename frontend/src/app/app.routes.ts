@@ -43,6 +43,22 @@ export const routes: Routes = [
       import('./features/admin/equipments/edit-equipment').then((m) => m.EditEquipment),
   },
   {
+    path: 'vehicles',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/admin/vehicles/vehicles').then((m) => m.Vehicles),
+  },
+  {
+    path: 'vehicles/new',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/admin/vehicles/add-vehicle').then((m) => m.AddVehicle),
+  },
+  {
+    path: 'vehicles/:id/edit',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/admin/vehicles/edit-vehicle').then((m) => m.EditVehicle),
+  },
+  {
     path: 'customer',
     loadChildren: () =>
       import('./features/customer/customer.routes').then((m) => m.CUSTOMER_ROUTES),
